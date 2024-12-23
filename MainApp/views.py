@@ -4,6 +4,15 @@ from .models import Item
 from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
+items = [
+    {"id": 1, "name": "Кроссовки abibas", "quantity": 5},
+    {"id": 1, "name": "Куртка кожаная", "quantity": 2},
+    {"id": 1, "name": "Coca-cola 1 литр", "quantity": 12},
+    {"id": 1, "name": "Картофель фри", "quantity": 0},
+    {"id": 8, "name": "Кепка", "quantity": 124},
+]
+
+
 def home(request):
     context = {
         "name": "Горбунов Юрий Геннадьевич",
@@ -27,11 +36,11 @@ def about(request):
     """
     return HttpResponse(text)
 
-def get_item(request, id):
+def get_item(request, item_id):
     try:
-        item = Item.objects.get(id=id)
+        item = Item.objects.get(id=item_id)
     except ObjectDoesNotExist:
-        return HttpResponse(f"Item with id={id} not found")
+        return HttpResponse(f"Item with id={item_id} not found")
     else:
         context = {"item": item}
         return render(request, "item.html", context)
@@ -40,7 +49,7 @@ def get_items(request):
     items = Item.objects.all()
     context = {
         "items": items,
-        "color" : colors,
+       #"color" : colors,
     }
     return render(request, 'items.html', context)
 
